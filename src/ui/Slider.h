@@ -8,7 +8,7 @@ public:
         sf::Vector2f pos,
         const std::string& label, 
         sf::Font font,
-        float value,
+        float* value,
         float min = 0.0f, 
         float max = 1.0f
     );
@@ -22,7 +22,7 @@ private:
     sf::Vector2f pos; // center
     std::string label;
     sf::Font font;
-    float value;
+    float* value;
     float min, max;
 
     bool dragging = false;

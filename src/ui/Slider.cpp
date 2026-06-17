@@ -5,14 +5,14 @@ Slider::Slider(
     sf::Vector2f pos, 
     const std::string& label, 
     sf::Font font,
-    float value,
+    float* value,
     float min, 
     float max
 ): pos(pos), label(label), font(font), value(value), min(min), max(max) {}
 
 float Slider::valueToHandleY() const {
     float trackTop = pos.y - trackHeight / 2.0f;
-    float normalized = 1.0f - (value - min) / (max - min);
+    float normalized = 1.0f - (*value - min) / (max - min);
     return trackTop + normalized * trackHeight;
 }
 
@@ -42,7 +42,7 @@ void Slider::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
         dragging = false;
 
     if (event.is<sf::Event::MouseMoved>() && dragging)
-        value = handleYToValue(mouse.y);
+        *value = handleYToValue(mouse.y);
 }
 
 void Slider::draw(sf::RenderWindow& window) {

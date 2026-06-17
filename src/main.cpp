@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "ui/UI.h"
+#include "settings/AmpSettings.h"
 
 int audioCallback(
     void* outputBuffer, 
@@ -9,14 +10,17 @@ int audioCallback(
     unsigned int nFrames, 
     double /*streamTime*/, 
     RtAudioStreamStatus /*status*/, 
-    void* /*userData*/
+    void* ampSettings
 )
 {
     float* in = static_cast<float*>(inputBuffer);
     float* out = static_cast<float*>(outputBuffer);
+    AmpSettings* settings = static_cast<AmpSettings*>(ampSettings);
 
     for (unsigned int i = 0; i < nFrames; i++) {
-        out[i] = in[i];
+        float sample = in[i] * settings->volume;
+        out[i * 2] = sample;
+        out[i * 2 + 1] = sample;
     }
 
     return 0;
@@ -24,6 +28,7 @@ int audioCallback(
 
 int main() {
     RtAudio audio;
+    AmpSettings ampSettings;
 
     if (audio.getDeviceCount() < 1) {
         std::cerr << "No audio devices found.\n";
@@ -44,20 +49,28 @@ int main() {
     inParams.deviceId = inputId;
     inParams.nChannels = 1;
     outParams.deviceId = outputId;
-    outParams.nChannels = 1;
+    outParams.nChannels = 2;
 
     unsigned int sampleRate = 48000;
     unsigned int bufferFrames = 256;
 
     try {
-        audio.openStream(&outParams, &inParams, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback);
+        audio.openStream(
+            &outParams, 
+            &inParams, 
+            RTAUDIO_FLOAT32, 
+            sampleRate, 
+            &bufferFrames, 
+            &audioCallback, 
+            &ampSettings
+        );
         audio.startStream();
     } catch (std::exception& e) {
         std::cerr << e.what() << "\n";
         return 1;
     }
 
-    UI ui;
+    UI ui(ampSettings);
     ui.run();
 
     audio.stopStream();

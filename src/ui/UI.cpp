@@ -1,7 +1,7 @@
 #include "UI.h"
 #include <iostream>
 
-UI::UI() : window(sf::VideoMode::getDesktopMode(), "amp-sim", sf::State::Fullscreen)
+UI::UI(AmpSettings& ampSettings) : window(sf::VideoMode::getDesktopMode(), "amp-sim", sf::State::Fullscreen)
 {
     window.setFramerateLimit(60);
 
@@ -15,7 +15,7 @@ UI::UI() : window(sf::VideoMode::getDesktopMode(), "amp-sim", sf::State::Fullscr
     }
     font.setSmooth(true);
 
-    volumeSlider = Slider(sf::Vector2f(w * 0.5f, h * 0.5), "Volume", font, 0.5);
+    volumeSlider = Slider(sf::Vector2f(w * 0.5f, h * 0.5), "Volume", font, &ampSettings.volume);
 }
 
 void UI::run() {
