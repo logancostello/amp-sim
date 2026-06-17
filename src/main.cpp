@@ -1,6 +1,7 @@
 #include <RtAudio.h>
 #include <iostream>
 #include <cstdlib>
+#include "ui/UI.h"
 
 int audioCallback(
     void* outputBuffer, 
@@ -56,8 +57,8 @@ int main() {
         return 1;
     }
 
-    std::cout << "\nAmpSim running. Press Enter to stop.\n";
-    std::cin.get();
+    UI ui;
+    ui.run();
 
     audio.stopStream();
     audio.closeStream();
