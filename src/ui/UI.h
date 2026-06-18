@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Slider.h"
-#include "../settings/AmpSettings.h"
+#include "../amp/AmpSettings.h"
 
 class UI {
     public:

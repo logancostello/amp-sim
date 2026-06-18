@@ -11,7 +11,8 @@ add_executable(amp-sim
     src/main.cpp
     src/ui/UI.cpp
     src/ui/Slider.cpp
-    src/settings/AmpSettings.cpp
+    src/amp/AmpSettings.cpp
+    src/amp/Amp.cpp
 )
 
 target_include_directories(amp-sim PRIVATE
