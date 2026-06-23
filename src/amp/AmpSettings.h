@@ -3,5 +3,6 @@
 class AmpSettings {
     public:
         AmpSettings();
-        float volume;        
+        float volume;   
+        float gain;     
 };

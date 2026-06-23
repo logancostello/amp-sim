@@ -1,7 +1,13 @@
 #include "Amp.h"
+#include <algorithm>
 
 Amp::Amp() {};
 
 float Amp::processInput(float input, AmpSettings* ampSettings) {
-    return input * ampSettings->volume;
+    
+    float distorted = input * ampSettings->gain;
+    distorted = std::tanh(distorted);
+
+    float output = distorted * ampSettings->volume;
+    return output;
 }

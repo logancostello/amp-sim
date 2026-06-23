@@ -11,6 +11,7 @@ class UI {
     private:
         sf::RenderWindow window;
         Slider volumeSlider;
+        Slider gainSlider;
 
         void handleEvents();
         void render();
