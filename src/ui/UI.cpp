@@ -16,7 +16,7 @@ UI::UI(AmpSettings& ampSettings) : window(sf::VideoMode::getDesktopMode(), "amp-
     font.setSmooth(true);
 
     volumeSlider = Slider(sf::Vector2f(w * 0.4f, h * 0.5), "Volume", font, &ampSettings.volume);
-    gainSlider = Slider(sf::Vector2f(w * 0.6f, h * 0.5), "Gain", font, &ampSettings.gain, 1.0f, 50.0f);
+    gainSlider = Slider(sf::Vector2f(w * 0.6f, h * 0.5), "Gain", font, &ampSettings.gain, 1.0f, 1.5f);
 }
 
 void UI::run() {

@@ -5,14 +5,11 @@ Amp::Amp() {};
 
 float Amp::processInput(float input, AmpSettings* ampSettings) {
     
-    float distorted = input * ampSettings->gain;
-    distorted = std::tanh(distorted);
-
-    distorted = distorted * ampSettings->gain;
-    distorted = std::tanh(distorted);
-
-    distorted = distorted * ampSettings->gain;
-    distorted = std::tanh(distorted);
+    float distorted = input;
+    for (int i = 0; i < 20; i++) {
+        distorted = distorted * ampSettings->gain;
+        distorted = std::tanh(distorted);
+    }
 
     float output = distorted * ampSettings->volume;
     return output;
